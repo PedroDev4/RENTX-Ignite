@@ -1,0 +1,22 @@
+Tipos de Testes:
+
+1 - Testes unitários -> Testar "pedaços" da nossa aplicação, Ex: Um teste do CreateUserUseCase(Funcionalidade da Aplicação), com objetivo de testar a regra de negócio da aplicação, não testamos acesso a DB e api's externas. O que importa e aplicação correta das regras de negóc.
+__________________________________________
+2 - Testes de Integração -> Quando nos queremos testar a aplicação inteira, iriamos testar desde o momento em que nosso endpoint é chamada, até usecase e a response da rota, "Testar o Fluxo inteiro da aplicação";
+
+Routes -> Controllers -> UseCases -> Repositories
+<- Repositories <- UseCeses <- Controllers <- Rotas
+
+PS: Sempre testamos a aplicação com banco de dados de testes em ambiente de Teste!
+__________________________________________
+
+
+TDD - Test Driven Development
+
+" TDD Não é tipo de teste! é uma metodologia de desenvolvimento... "
+
+Começamos criando os testes e depois cria a aplicação
+
+Uma Criação de usuário: Escrever o teste e pensar na lógica do processo -> Depois escrever o resto da funcionalidade(Repositories,UseCases, Controllers);
+__________________________________________
+
