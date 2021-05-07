@@ -1,6 +1,7 @@
 import { hash } from "bcryptjs";
 import { inject, injectable } from "tsyringe";
 
+import { User } from "@modules/accounts/infra/typeorm/model/User";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
@@ -20,7 +21,7 @@ class CreateUserUseCase {
         password,
         email,
         driver_license,
-    }: ICreateUserDTO): Promise<void> {
+    }: ICreateUserDTO): Promise<User> {
         const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
         if (userAlreadyExists) {
@@ -29,12 +30,14 @@ class CreateUserUseCase {
 
         const passwordHash = await hash(password, 8); // Criptografando senha
 
-        await this.usersRepository.create({
+        const user = await this.usersRepository.create({
             name,
             password: passwordHash,
             email,
             driver_license,
         });
+
+        return user;
     }
 }
 

@@ -50,20 +50,20 @@ ____________________________
 # Cadastro de Imagens do Carro
 
 **RF**
-[] Deve ser possivel cadastrar a imagem do carro
+[X] Deve ser possivel cadastrar a imagem do carro
 
 **RNF**
-[] Utilizar o multer para upload os arquivos
+[X] Utilizar o multer para upload os arquivos
 
 **RN**
-[] O Usuario deve poder cadastrar mais de uma imagem para o mesmo carro
-[] Não deve ser possivel cadastrar a imagem do carro se o usuário não for admin
+[X] O Usuario deve poder cadastrar mais de uma imagem para o mesmo carro
+[X] Não deve ser possivel cadastrar a imagem do carro se o usuário não for admin
 [X] Não deve ser possivel cadastrar uma imagem para um carro não existente
 
 # Aluguel de Carro
 
 **RF**
-[] Deve ser possivel cadastrar um aluguel
+[X] Deve ser possivel cadastrar um aluguel
 
 **RNF**
 
@@ -72,4 +72,20 @@ ____________________________
 [X] O aluguel deve ter duração minima de 24 horas
 [X] Não deve ser possivel cadastrar um novo aluguel caso já exista um aluguel aberto para o mesmo usuário
 [X] Não deve ser possivel cadastrar um novo aluguel caso já exista um aluguel aberto para o mesmo carro
-[] O usuário deve estar logado na aplicação
+[X] O usuário deve estar logado na aplicação
+[X] Ao Realizar um aluguel, o status do carro alugado deve ser alterado para indisponivel
+
+# Devolução de carro
+
+**RF**
+[] Deve ser possivel realizar a devolução de um Carro
+
+**RN**
+[X] Se o Carro for devolvido com menos de 24 horas(antes das expected_return_date) deverá ser cobrado diária completa!
+[X] Ao realizar a devolução, o carro deverá ser liberado para outro aluguel.
+[X] Ao realizar a devolução, o usuário sera liberado para realizar outro aluguel.
+[X] Ao Realizar a devolução, deverá ser calculado o total de aluguel. (daily_rate * daily)
+[X] Se o Horário da devolução seja superior ao horario previsto de entrega, devera ser cobrado
+multa proporcinal aos dias de atraso
+[X] Caso haja multa, devera ser somado ao valor total do aluguel
+[X] O usuário não precisa estar logado no sistema.

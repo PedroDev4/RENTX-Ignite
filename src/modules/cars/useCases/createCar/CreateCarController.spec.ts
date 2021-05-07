@@ -7,7 +7,7 @@ import createConnection from "@shared/infra/database";
 import { app } from "@shared/infra/http/app";
 
 let connection: Connection;
-describe("List Categories", () => {
+describe("Create Car", () => {
     beforeAll(async () => {
         connection = await createConnection();
         await connection.runMigrations();
@@ -25,15 +25,16 @@ describe("List Categories", () => {
         await connection.close();
     });
 
-    it("Should be able to list all categories", async () => {
+    it("Should be able to create a new Car", async () => {
         const responseToken = await request(app).post("/sessions").send({
             email: "admin@rentx.com",
             password: "admin",
         });
 
         const { token } = responseToken.body;
+        console.log(token);
 
-        await request(app)
+        const responseCategory = await request(app)
             .post("/categories")
             .send({
                 name: "Categories Supertest",
@@ -43,11 +44,23 @@ describe("List Categories", () => {
                 Authorization: `Bearer ${token}`,
             });
 
-        const response = await request(app).get("/categories");
+        const { id } = responseCategory.body;
 
-        expect(response.status).toBe(200);
-        expect(response.body.length).toBe(1);
-        expect(response.body[0]).toHaveProperty("id");
-        expect(response.body[0].name).toEqual("Categories Supertest");
+        const responseCar = await request(app)
+            .post("/cars")
+            .send({
+                name: "CarName Supertest",
+                description: "CarDescriptionTest",
+                daily_rate: 100,
+                license_plate: "XXX-yui",
+                brand: "Brand Test",
+                fine_amount: 50,
+                category_id: id,
+            })
+            .set({
+                Authorization: `Bearer ${token}`,
+            });
+
+        expect(responseCar.status).toBe(201);
     });
 });

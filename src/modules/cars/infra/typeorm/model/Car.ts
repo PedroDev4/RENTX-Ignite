@@ -31,7 +31,7 @@ class Car {
     daily_rate: number;
 
     @Column()
-    available: true;
+    available: boolean;
 
     @Column()
     fine_amount: number;

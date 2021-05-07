@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { ICategoriesRepository } from "@modules/cars/repositories/ICategoriesRepository";
+import { AppError } from "@shared/errors/AppError";
 // O nosso serviço não tem que 'conhecer' os metodos de rotas (Request,Response)
 interface IRequest {
     name: string;
@@ -23,7 +24,7 @@ class CreateCategoryuseCase {
         );
 
         if (categoryAlreadyExists) {
-            throw new Error("Category Already Exists!");
+            throw new AppError("Category Already Exists!");
         }
 
         await this.categoriesRepository.create({ name, description });
