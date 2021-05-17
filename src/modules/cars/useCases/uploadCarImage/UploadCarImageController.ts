@@ -21,7 +21,7 @@ class UploadCarImageController {
             images_name,
         });
 
-        return response.json(carImage);
+        return response.status(201).json(carImage);
     }
 }
 

@@ -52,35 +52,37 @@ describe("Create Rentals", () => {
     });
 
     it("Should NOT be able to create a new rental if this there's another open to the same User", async () => {
-        expect(async () => {
-            await createRentalUseCase.execute({
-                user_id: "12345",
-                car_id: "123",
-                expected_return_date: DayAdd24hours,
-            });
+        await rentalsRepositoryInMemory.create({
+            car_id: "1234",
+            expected_return_date: DayAdd24hours,
+            user_id: "12345",
+        });
 
+        expect(async () => {
             await createRentalUseCase.execute({
                 user_id: "12345",
                 car_id: "123",
                 expected_return_date: new Date(),
             });
-        }).rejects.toBeInstanceOf(AppError);
+        }).rejects.toEqual(
+            new AppError("There's a rental in progress for user!")
+        );
     });
 
     it("Should NOT be able to create a new rental if this there's another open to the same Car", async () => {
+        await rentalsRepositoryInMemory.create({
+            car_id: "1234",
+            expected_return_date: DayAdd24hours,
+            user_id: "12345",
+        });
+
         expect(async () => {
             await createRentalUseCase.execute({
-                user_id: "123",
-                car_id: "ABC",
+                user_id: "12345",
+                car_id: "123",
                 expected_return_date: DayAdd24hours,
             });
-
-            await createRentalUseCase.execute({
-                user_id: "321",
-                car_id: "ABC",
-                expected_return_date: DayAdd24hours,
-            });
-        }).rejects.toBeInstanceOf(AppError);
+        }).rejects.toEqual(new AppError("Car is unavailable"));
     });
 
     it("Should NOT be able to create a new rental with invalid return time", async () => {
@@ -90,6 +92,10 @@ describe("Create Rentals", () => {
                 car_id: "ABC",
                 expected_return_date: dayjs().toDate(),
             });
-        }).rejects.toBeInstanceOf(AppError);
+        }).rejects.toEqual(
+            new AppError(
+                "Invalid Return time. Minimun rental time is 24 hours!"
+            )
+        );
     });
 });

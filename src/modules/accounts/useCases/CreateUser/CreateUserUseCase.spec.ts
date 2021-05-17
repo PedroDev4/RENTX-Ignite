@@ -38,6 +38,6 @@ describe("User Creation", () => {
                 driver_license: "XXYY",
                 password: "userpasswordtest",
             });
-        }).rejects.toBeInstanceOf(AppError);
+        }).rejects.toEqual(new AppError("User Already Exists!"));
     });
 });

@@ -44,24 +44,23 @@ describe("Authenticate User", () => {
                 email: "false@email.com",
                 password: "1234",
             });
-        }).rejects.toBeInstanceOf(AppError); // Esperamos que a execução do useCase Tenha  uma Rejeição de um erro do tipo AppError
+        }).rejects.toEqual(new AppError("Email or password incorrect!")); // Esperamos que a execução do useCase Tenha  uma Rejeição de um erro do tipo AppError
     });
 
-    it("Should not be able to authenticate with incorrect password", () => {
+    it("Should not be able to authenticate with incorrect password", async () => {
+        const user: ICreateUserDTO = {
+            driver_license: "233",
+            email: "user@user.com",
+            password: "2233",
+            name: "User test error",
+        };
+
+        await createUserUseCase.execute(user);
         expect(async () => {
-            const user: ICreateUserDTO = {
-                driver_license: "233",
-                email: "user@user.com",
-                password: "2233",
-                name: "User test error",
-            };
-
-            await createUserUseCase.execute(user);
-
             await authenticateUserUseCase.execute({
                 email: user.email,
                 password: "IncorrectPassword",
             });
-        }).rejects.toBeInstanceOf(AppError);
+        }).rejects.toEqual(new AppError("Email or password incorrect!"));
     });
 });

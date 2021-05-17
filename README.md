@@ -89,3 +89,10 @@ ____________________________
 multa proporcinal aos dias de atraso
 [X] Caso haja multa, devera ser somado ao valor total do aluguel
 [X] O usuário não precisa estar logado no sistema.
+
+# Listagem de Alugueis para usuário de
+**RF**
+[] Deve ser possivel realizar a busca de todos os alugueis para o usuário
+
+**RN**
+[] O usuário deve estar logado na aplicação
